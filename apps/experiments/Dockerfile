@@ -46,6 +46,12 @@ COPY ./setup.cfg \
     ./
 COPY ./tests ./tests
 
-
-FROM build AS prod
 CMD pipenv run jupyter lab --allow-root --ip=0.0.0.0
+
+
+FROM python:3.9-slim-buster AS prod
+
+COPY --from=build /app /app
+WORKDIR /app
+
+CMD . .venv/bin/activate && python -m jupyter lab --allow-root --ip=0.0.0.0
