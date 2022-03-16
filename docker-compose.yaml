@@ -1,0 +1,13 @@
+version: "3"
+
+
+services:
+
+  experiments:
+    container_name: experiments
+    image: experiments:prod
+    env_file:
+      - ./apps/experiments/.env
+    depends_on:
+      - mlflow
+

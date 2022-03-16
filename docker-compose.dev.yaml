@@ -1,0 +1,16 @@
+version: "3"
+
+
+services:
+
+  experiments:
+    image: experiments:dev
+    volumes:
+      - ./apps/experiments/src:/app/src
+      - ./apps/experiments/tests:/app/tests
+      - ./data:/app/data
+      - ./apps/experiments/coverage/:/app/coverage/
+      - ./apps/experiments/Pipfile:/app/Pipfile
+      - ./apps/experiments/setup.cfg:/app/setup.cfg
+      - ./apps/experiments/run_lints.sh:/app/run_lints.sh
+      - ./apps/experiments/run_tests.sh:/app/run_tests.sh

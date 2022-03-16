@@ -1,0 +1,15 @@
+# docker-compose.linux_networking.yml
+# Use this to configure the network stack for linux users
+version: '3'
+
+
+services:
+
+  mlflow:
+    network_mode: host
+
+  mlflow-pg:
+    network_mode: host
+
+  experiments:
+    network_mode: host

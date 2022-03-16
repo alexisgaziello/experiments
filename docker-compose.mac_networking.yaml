@@ -1,0 +1,28 @@
+# docker-compose.yml
+# Use this to configure networking for mac users
+
+version: '3'
+
+
+networks:
+  analytics_network:
+    driver: bridge
+
+services:
+  mlflow:
+    networks:
+      - analytics_network
+    ports:
+      - "5000:5000"
+
+  mlflow-pg:
+    networks:
+      - analytics_network
+    ports:
+      - "5435:5432"
+
+  experiments:
+    networks:
+      - analytics_network
+    ports:
+      - "8888:8888"
