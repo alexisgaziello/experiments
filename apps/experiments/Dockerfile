@@ -1,57 +1,26 @@
-FROM node:16.14-buster AS node
-# This stage is used to get the node.js binaries
+FROM public.ecr.aws/j1r0q0g6/notebooks/notebook-servers/jupyter:v1.5.0 AS prod
+
+# Structure was taken from: https://github.com/kubeflow/kubeflow/blob/master/components/example-notebook-servers/base/Dockerfile
+USER root
+RUN apt-get -yq update \
+  && apt-get -yq install --no-install-recommends \
+    libpq-dev \
+    gcc \
+    libc6-dev \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
 
 
-FROM python:3.9-buster AS base
+# Structure was taken from: https://github.com/kubeflow/kubeflow/blob/master/components/example-notebook-servers/jupyter/Dockerfile
+USER ${NB_UID}
 
-# Copy over the node.js binaries. Required for Kale.
-COPY --from=node /usr/lib /usr/lib
-COPY --from=node /usr/local/share /usr/local/share
-COPY --from=node /usr/local/lib /usr/local/lib
-COPY --from=node /usr/local/include /usr/local/include
-COPY --from=node /usr/local/bin /usr/local/bin
+COPY requirements.txt /tmp
 
-# Create VENVs inside the project.
-ENV PIPENV_VENV_IN_PROJECT=1
+RUN python3 -m pip install -r /tmp/requirements.txt --quiet --no-cache-dir \
+ && rm -f /tmp/requirements.txt \
+ && jupyter lab --generate-config \
+ && rm -rf ${HOME}/.cache/yarn
 
-WORKDIR /app
-
-# Install pipenv and npm
-RUN pip install pipenv==2022.1.8
-RUN npm install -g npm@8.5
-
-
-FROM base AS make-lockfile
-COPY ./Pipfile ./
-RUN pipenv install --dev
-
-
-FROM base AS build
-COPY version.txt \
-    ./Pipfile \
-    ./Pipfile.lock \
-    ./
-COPY src ./src
-RUN pipenv sync
 
 # Install Kale dependency
-RUN pipenv run jupyter labextension install kubeflow-kale-labextension
-
-
-FROM build AS dev
-RUN pipenv sync --dev
-COPY ./setup.cfg \
-    ./run_lints.sh \
-    ./run_tests.sh \
-    ./
-COPY ./tests ./tests
-
-CMD pipenv run jupyter lab --allow-root --ip=0.0.0.0
-
-
-FROM python:3.9-slim-buster AS prod
-
-COPY --from=build /app /app
-WORKDIR /app
-
-CMD . .venv/bin/activate && python -m jupyter lab --allow-root --ip=0.0.0.0
+RUN jupyter labextension install kubeflow-kale-labextension
