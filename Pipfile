@@ -1,0 +1,44 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pandas = "==1.*"
+requests = "==2.*"
+mlflow = "==1.*"
+matplotlib = "*"
+jupyter = "*"
+notebook = "*"
+ipython = "==8.*"
+ipykernel = "==6.*"
+sqlalchemy = "==1.*"
+seaborn = "*"
+numpy = "==1.*"
+scikit-learn = "==1.*"
+scipy = "==1.*"
+pymongo = "==4.*"
+parse = "==1.*"
+fuzzy = "==1.*"
+unidecode = "==1.*"
+levenshtein = "==0.*"
+networkx = "==2.*"
+psycopg2 = "==2.9.*"
+jupyterlab = "==2.*"
+
+[dev-packages]
+pylint = "*"
+flake8 = "*"
+mypy = "*"
+pytest = "*"
+coverage = "*"
+isort = "*"
+types-setuptools = "*"
+types-requests = "*"
+types-python-dateutil = "*"
+
+[scripts]
+main = "python -m src.main"
+
+[requires]
+python_version = "3.9"
