@@ -8,6 +8,3 @@ services:
     image: experiments:prod
     env_file:
       - ./apps/experiments/.env
-    depends_on:
-      - mlflow
-

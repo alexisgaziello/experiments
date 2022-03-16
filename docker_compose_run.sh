@@ -38,7 +38,6 @@ fi
 docker-compose \
   -f docker-compose.yaml \
   "${OPTIONAL_DOCKER_COMPOSE_UP_PARAMS[@]}" \
-  --env-file ./apps/mlflow/.env \
   up \
   --no-build \
   "$@"  # Allows you to pass in as many arguments as you like to the original shell script

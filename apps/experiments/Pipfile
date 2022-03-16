@@ -6,7 +6,6 @@ name = "pypi"
 [packages]
 pandas = "==1.*"
 requests = "==2.*"
-mlflow = "==1.*"
 matplotlib = "*"
 jupyter = "*"
 notebook = "*"

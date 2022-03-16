@@ -5,11 +5,5 @@ version: '3'
 
 services:
 
-  mlflow:
-    network_mode: host
-
-  mlflow-pg:
-    network_mode: host
-
   experiments:
     network_mode: host
