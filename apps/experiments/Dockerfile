@@ -1,4 +1,4 @@
-FROM public.ecr.aws/j1r0q0g6/notebooks/notebook-servers/jupyter:v1.5.0 AS prod
+FROM public.ecr.aws/j1r0q0g6/notebooks/notebook-servers/jupyter:v1.5.0 AS dev
 
 # Structure was taken from: https://github.com/kubeflow/kubeflow/blob/master/components/example-notebook-servers/base/Dockerfile
 # Install necessary dependencies to install python packages.
@@ -15,13 +15,10 @@ RUN apt-get -yq update \
 # Structure was taken from: https://github.com/kubeflow/kubeflow/blob/master/components/example-notebook-servers/jupyter/Dockerfile
 USER ${NB_UID}
 
-COPY --chown=jovyan:users requirements.txt /tmp
-
 # Install python requirements
+COPY --chown=jovyan:users requirements.txt /tmp
 RUN python3 -m pip install -r /tmp/requirements.txt --quiet --no-cache-dir \
- && rm -f /tmp/requirements.txt \
- && jupyter lab --generate-config \
- && rm -rf ${HOME}/.cache/yarn
+ && rm -f /tmp/requirements.txt
 
 # Install Kale extension to jupyterlab
 RUN jupyter labextension install kubeflow-kale-labextension

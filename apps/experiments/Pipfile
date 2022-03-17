@@ -24,6 +24,7 @@ levenshtein = "==0.*"
 networkx = "==2.*"
 psycopg2 = "==2.9.*"
 jupyterlab = "==2.*"
+kubeflow-kale = "*"
 
 [dev-packages]
 pylint = "*"
