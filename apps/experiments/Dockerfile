@@ -1,4 +1,4 @@
-FROM public.ecr.aws/j1r0q0g6/notebooks/notebook-servers/jupyter:v1.5.0 AS dev
+FROM public.ecr.aws/j1r0q0g6/notebooks/notebook-servers/jupyter:v1.5.0 AS prod
 
 # Structure was taken from: https://github.com/kubeflow/kubeflow/blob/master/components/example-notebook-servers/base/Dockerfile
 # Install necessary dependencies to install python packages.
