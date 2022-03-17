@@ -26,6 +26,9 @@ psycopg2 = "==2.9.*"
 jupyterlab = "==2.*"
 kubeflow-kale = "==0.4.*"
 
+# Necessary because of a dependency bug. https://github.com/kubeflow-kale/kale/issues/407
+MarkupSafe = "==2.0.1"
+
 [dev-packages]
 pylint = "*"
 flake8 = "*"
